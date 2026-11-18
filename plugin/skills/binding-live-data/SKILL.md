@@ -4,21 +4,23 @@ description: "Shows live values in a Streamloop scene through the Streamloop MCP
 ---
 # Binding live data
 
-> With the Streamloop MCP: every `scene_*` tool also takes `scene`, the scene's id (`scn_…`) — a call written `scene_get('frame/intro', { as: 'image' })` is `scene_get { scene, path: "frame/intro", as: "image" }`. Changing or removing something that exists also takes its `revision` (a layer: its own or its frame's; `"*"` overwrites on purpose), or the answer is REVISION_REQUIRED. Every set changes the draft only: viewers see it after `publish_scene { scene, draftRevision }` (the `draftRevision` every answer carries; while a stream plays the scene it answers CONFIRM_REQUIRED — tell the user what changes, then `confirm: true`). Starting one from nothing: skill building-scenes.
+> With the Streamloop MCP: a scene is reached by its id, `sceneId` (`scn_…`): `stream_get` answers it for a scene stream, and `stream_create { name, kind: "scene" }` makes a new one. Every `scene_*` tool takes it. A call written `scene_get('frame/intro', { as: 'image' })` is `scene_get { sceneId, path: "frame/intro", as: "image" }`, and `scene_set('frame/intro', { replace: … })` is `scene_set { sceneId, path: "frame/intro", replace: … }`: `replace` is the whole resource, `merge` only the fields to change (a merge patch, or one text edit `{ old, new }`). To have a change refused when someone edited the resource meanwhile, add `basedOnVersionId`: the `revision` you read. Every set changes the draft only; `scene_publish { sceneId }` puts the whole draft on air at once on every stream that plays the scene, so tell the user what will change first. Starting one from nothing: skill building-scenes.
 
 ## What a frame can read
 | Root | Holds | Where its shape is |
 |---|---|---|
 | `state.…` | Show state, written by the script | scene_get('script/state.ts') |
 | `data.<id>.rows` | A table's rows (`status` too) | scene_get('source/data/<id>') → its schema's columns |
-| `sources.<id>.track.title` / `.next` | A playlist's now playing | — |
+| `sources.<id>.track.title` / `.next` | A playlist's now playing (`next`: the next item's title, a string); no `track` while it plays nothing (an empty playlist) — show those layers under `{sources.<id>.track ? … : null}` | — |
 | `sources.<id>.status` | A media source's `live`, `waiting`, `down`, `empty`, `idle` (not on a frame on air or cued, so not running) | — |
 | `show.frame`, `show.next`, `show.live` | What's on air | — |
 | `show.now` | The current time | — |
-| `controls.<id>` | The operator's inputs (toggle, text, number, select); declare one with scene_set('control/<id>', { value: { type, label, default?, group? } }) — a toggle reads as a boolean; the picture shows controls at their `default`; no script needed | scene_get('control/*') |
+| `controls.<id>` | The operator's inputs (toggle, text, number, select); declare one with scene_set('control/<id>', { replace: { type, label, default?, group? } }) — a toggle reads as a boolean; the picture shows controls at their `default`; no script needed | scene_get('control/*') |
 | `tokens.…` | Style tokens | scene_get('tokens') |
 
 Every path is checked when the frame is set: a path that doesn't exist is refused with its name. A value the show doesn't have yet → add it to state (skill scripting-the-show) or a table (skill shaping-data).
+
+The frame is what viewers see: a value that isn't there yet hides its layer (a condition), never stands in as a source's name or a note to the operator ("add tracks", "playlist is empty") — those go in your answer.
 
 ## Syntax (in a frame's JSX)
 - Binding: `value={controls.guestName}`, `style={{ color: tokens.colors.accent }}`

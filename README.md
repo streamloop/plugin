@@ -21,29 +21,27 @@ Only the MCP server, no skills: `claude mcp add --transport http streamloop http
 
 ## Skills
 
-Read `streamloop` first: what Streamloop is, which kind of loop fits, the way to live, what it costs, and which skill comes next.
+Read `streamloop` first: what Streamloop is, which kind of stream fits, the way to live, credits and the connection's workspace, and which skill comes next.
 
 **For an assistant acting for someone with a Streamloop account**, through the MCP:
 
 | Skill | For |
 |---|---|
-| `streamloop` | the base: the two kinds of loop and what to choose, the way to live, quality and cost, MCP vs API vs dashboard |
-| `running-24-7-loops` | streams that loop videos and music: uploads, playlists, schedules, live playlist swaps, play orders |
-| `streaming-to-destinations` | YouTube (managed or by key), Twitch and any RTMP platform, multistream |
-| `managing-workspaces-and-credits` | the right workspace, credit balance and burn rate, past usage |
+| `streamloop` | the base: the two kinds of stream and which to choose, the way to live, quality, credits, the workspace |
+| `running-24-7-loops` | video streams: imports and uploads, playlists, play orders, schedules, live playlist changes, why a stream won't start |
+| `streaming-to-destinations` | YouTube (signed in or by key), Twitch and any RTMP platform, multistream, YouTube broadcast settings |
 
-Scenes, the same way (a live show instead of a video loop; private beta):
+Scenes, the same way (a live show instead of a video loop):
 
 | Skill | For |
 |---|---|
-| `building-scenes` | a scene from nothing to on air: the scene tools, the way through, what answers mean |
+| `building-scenes` | a scene from nothing to on air: the scene tools, the way through, publishing, rolling back, what only the studio does |
 | `composing-frames`, `animating-frames` | layout, type, colour and motion of each frame (`frame/<id>`) |
 | `shaping-data`, `binding-live-data` | tables from URLs, sheets and formulas, and binding them in layers |
 | `writing-components` | reusable lower thirds, score bugs, cards |
 | `scripting-the-show` | timers, reactions to data and feeds, controls, state |
 | `handling-media` | cameras, encoders, files, web pages, fallbacks, sound |
 | `coding-web-pages` | a web page written as a layer |
-| `operating-live-scenes` | taking frames to air, controls, live corrections, encoder keys |
 
 **For a developer's coding agent**, without the MCP:
 
@@ -55,6 +53,6 @@ Each skill is `plugin/skills/<name>/SKILL.md`.
 
 ## Where they come from
 
-The scene skills are the same ones Streamloop's studio assistant reads, generated from the studio's source (`studio/src/ai/skills` in `streamloop/live-scene`); the other seven are written for agents outside the studio. A release of the studio copies `plugin/streamloop` there into `plugin/` here. Issues and suggestions are welcome here; the text itself is fixed at the source.
+Eight of the scene skills are the same ones Streamloop's studio assistant reads, generated from the studio's source (`studio/src/ai/skills` in `streamloop/live-scene`); the other five are written for agents outside the studio. A release of the studio copies `plugin/streamloop` there into `plugin/` here. Issues and suggestions are welcome here; the text itself is fixed at the source.
 
 Docs: https://streamloop.app/docs · MCP reference: https://streamloop.app/docs/api-reference/mcp/overview

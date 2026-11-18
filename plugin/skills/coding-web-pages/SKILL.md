@@ -4,12 +4,12 @@ description: "Writes a web page in code (React, Tailwind v4, motion; transparent
 ---
 # Coding web pages
 
-> With the Streamloop MCP: every `scene_*` tool also takes `scene`, the scene's id (`scn_…`) — a call written `scene_get('frame/intro', { as: 'image' })` is `scene_get { scene, path: "frame/intro", as: "image" }`. Changing or removing something that exists also takes its `revision` (a layer: its own or its frame's; `"*"` overwrites on purpose), or the answer is REVISION_REQUIRED. Every set changes the draft only: viewers see it after `publish_scene { scene, draftRevision }` (the `draftRevision` every answer carries; while a stream plays the scene it answers CONFIRM_REQUIRED — tell the user what changes, then `confirm: true`). Starting one from nothing: skill building-scenes.
+> With the Streamloop MCP: a scene is reached by its id, `sceneId` (`scn_…`): `stream_get` answers it for a scene stream, and `stream_create { name, kind: "scene" }` makes a new one. Every `scene_*` tool takes it. A call written `scene_get('frame/intro', { as: 'image' })` is `scene_get { sceneId, path: "frame/intro", as: "image" }`, and `scene_set('frame/intro', { replace: … })` is `scene_set { sceneId, path: "frame/intro", replace: … }`: `replace` is the whole resource, `merge` only the fields to change (a merge patch, or one text edit `{ old, new }`). To have a change refused when someone edited the resource meanwhile, add `basedOnVersionId`: the `revision` you read. Every set changes the draft only; `scene_publish { sceneId }` puts the whole draft on air at once on every stream that plays the scene, so tell the user what will change first. Starting one from nothing: skill building-scenes.
 
 **Web page or component?** A web page is a browser rendering your React, Tailwind and SVG inside a layer, with props bound to the show's data: it can draw anything the web can, and it costs a browser on air. A component (skill writing-components) is the show's own elements composed into one: crisp, cheap, animated and bound like any layer. Default to a component; write a web page when the design needs CSS effects, SVG, charts, canvas or complex choreography, or the user asks for HTML or React.
 
 ```
-scene_set('source/web/scoreBug', { value: {
+scene_set('source/web/scoreBug', { replace: {
   name: "Score bug", description: "Home and away score; the number pops when it changes",
   code: "import { motion, AnimatePresence } from \"motion/react\"\n\ntype Props = { home: number; away: number; label: string }\n\nexport default function App({ home, away, label }: Props) {\n  return (\n    <div className=\"flex h-full w-full items-center gap-6 rounded-2xl bg-ink/90 px-8 text-white\">\n      <span className=\"text-2xl font-semibold tracking-widest text-brand\">{label}</span>\n      <AnimatePresence mode=\"popLayout\">\n        <motion.span key={`${home}-${away}`} initial={{ y: 24, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -24, opacity: 0 }} className=\"text-6xl font-extrabold tabular-nums\">{home} – {away}</motion.span>\n      </AnimatePresence>\n    </div>\n  )\n}\n",
   styles: "@theme { --color-brand: #F43F5E; --color-ink: #0B0F1A; }"
@@ -21,7 +21,7 @@ A `Video` layer shows it (a web source is a picture source like a feed), inside 
 ```
 
 ## The code
-- `export default function App(props: Props)`, with `Props` declared in the file. It is type-checked (strict) and compiled when set; an error comes back with its line — fix it and set again (`edits: [{ field: "code", old, new }]` for small changes).
+- `export default function App(props: Props)`, with `Props` declared in the file. It is type-checked (strict) and compiled when set; an error comes back with its line — fix it and set again (`merge: { field: "code", old, new }` for a small change, one per call).
 - Imports: `react` (hooks) and `motion/react` (motion, AnimatePresence, useAnimate, …). Nothing else.
 - The network works as for any web page (public addresses only): fonts, pictures and fetches by URL load. Prefer inline SVG, `data:` URLs and system fonts (`font-sans`, `font-mono`) when they do: nothing to wait for on air. The show's data comes in through props, not fetches.
 - Style with Tailwind v4 class names written out in full (`bg-rose-500`; a class built at run time like `bg-${c}-500` is not generated — use `style={{ … }}` for computed values). `styles` holds Tailwind CSS: `@theme` colours and fonts, `@keyframes`, plain rules.
