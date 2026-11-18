@@ -1,0 +1,35 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "streamloop",
+  "version": "1.1.0",
+  "description": "Run 24/7 streams and build live scenes on Streamloop: the Streamloop MCP server and the skills to use it well.",
+  "author": { "name": "Streamloop", "url": "https://streamloop.app" },
+  "homepage": "https://streamloop.app/docs",
+  "repository": "https://github.com/streamloop/skills",
+  "license": "MIT",
+  "keywords": ["streaming", "live", "youtube", "twitch", "multistream", "broadcast", "graphics", "overlay", "24/7"],
+  "extensions": {
+    "com.openai": {
+      "onboardingSkill": "./skills/streamloop/SKILL.md",
+      "interface": {
+        "displayName": "Streamloop",
+        "shortDescription": "Run 24/7 live streams",
+        "longDescription": "Streamloop loops video to YouTube, Twitch, Facebook or any RTMP destination around the clock, from the cloud. Create and schedule streams, upload or import media, arrange playlists and playing orders, connect destinations, and build live scenes with overlays, live inputs and live data. Works on your own Streamloop account, signed in with OAuth.",
+        "developerName": "Streamloop",
+        "category": "Productivity",
+        "capabilities": ["Read", "Write"],
+        "websiteURL": "https://streamloop.app",
+        "supportURL": "https://streamloop.app/contact",
+        "privacyPolicyURL": "https://streamloop.app/privacy",
+        "termsOfServiceURL": "https://streamloop.app/terms",
+        "defaultPrompt": [
+          "Which of my streams are live right now?",
+          "Create a 24/7 stream from this video URL and send it to my YouTube channel",
+          "Schedule my stream to restart every 12 hours"
+        ],
+        "logo": "./assets/logo.svg",
+        "composerIcon": "./assets/logo.svg"
+      }
+    }
+  }
+}
