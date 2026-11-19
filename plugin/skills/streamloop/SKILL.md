@@ -39,7 +39,7 @@ Streams, media, destinations and credits belong to a **workspace**. A connection
 ## Which way in
 
 - **The Streamloop MCP** (`https://mcp.streamloop.app/mcp`, OAuth: the user signs in as themself) is the way for an assistant acting for someone. Its tools are named `<resource>_<action>`; ids are prefixed (`stream_`, `pl_`, `obj_`, `dest_`, `oseq_`, `scn_`): read them from a tool, never make one up. Errors carry a code and what to do next.
-- **The dashboard** (`streamloop.app/loops`) and, for scenes, the **studio** are the user's own hands: signing in, paying, Google's YouTube consent, and what the MCP has no tool for (taking a scene's frames to air by hand, encoder keys, secrets).
+- **The dashboard** (`streamloop.app/loops`) and, for scenes, the **studio** are the user's own hands: signing in, paying, Google's YouTube consent, and what the MCP has no tool for (encoder keys, secrets).
 - **The HTTP APIs** (`https://api.streamloop.app/v1`, REST and Scenes) are for code: scripts, backends, cron, CI. Their reference is at `https://streamloop.app/docs/api-reference/introduction`.
 
 ## Then read
