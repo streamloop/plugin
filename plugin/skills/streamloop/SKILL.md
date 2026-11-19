@@ -40,7 +40,7 @@ Streams, media, destinations and credits belong to a **workspace**. A connection
 
 - **The Streamloop MCP** (`https://mcp.streamloop.app/mcp`, OAuth: the user signs in as themself) is the way for an assistant acting for someone. Its tools are named `<resource>_<action>`; ids are prefixed (`stream_`, `pl_`, `obj_`, `dest_`, `oseq_`, `scn_`): read them from a tool, never make one up. Errors carry a code and what to do next.
 - **The dashboard** (`streamloop.app/loops`) and, for scenes, the **studio** are the user's own hands: signing in, paying, Google's YouTube consent, and what the MCP has no tool for (taking a scene's frames to air by hand, encoder keys, secrets).
-- **The HTTP APIs** (`https://api.streamloop.app/v1`, REST and Scenes) are for code: scripts, backends, cron, CI. Skill calling-the-streamloop-api.
+- **The HTTP APIs** (`https://api.streamloop.app/v1`, REST and Scenes) are for code: scripts, backends, cron, CI. Their reference is at `https://streamloop.app/docs/api-reference/introduction`.
 
 ## Then read
 
@@ -51,4 +51,3 @@ Streams, media, destinations and credits belong to a **workspace**. A connection
 | a scene from nothing to on air, publishing, rolling back | building-scenes, then composing-frames, animating-frames, shaping-data, binding-live-data, scripting-the-show, handling-media |
 | a design reused across frames (a lower third, a score bug, a card) | writing-components |
 | a layer the scene's elements can't draw (rich CSS, SVG, charts, canvas), or HTML or React asked for | coding-web-pages |
-| a script or backend without the MCP | calling-the-streamloop-api |

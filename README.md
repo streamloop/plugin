@@ -47,7 +47,6 @@ Scenes, the same way (a live show instead of a video loop):
 
 | Skill | For |
 |---|---|
-| `calling-the-streamloop-api` | scripts and backends on the REST and Scenes HTTP APIs: auth, pagination, idempotent retries, revisions, errors |
 
 Each skill is `plugin/skills/<name>/SKILL.md`.
 

@@ -5,7 +5,7 @@ Run 24/7 live streams on [Streamloop](https://streamloop.app) from a conversatio
 ## What it contains
 
 - The Streamloop MCP server, `https://mcp.streamloop.app/mcp`. You sign in to your own Streamloop account with OAuth; the plugin holds no keys.
-- Skills that teach the assistant how Streamloop works. `streamloop` is the base: which kind of stream fits, the order of setup, and which skill comes next. The others cover video loops and playlists, destinations and multistream, and building live scenes and changing them on air. A last one, `calling-the-streamloop-api`, is for coding agents that write scripts against Streamloop's HTTP API.
+- Skills that teach the assistant how Streamloop works. `streamloop` is the base: which kind of stream fits, the order of setup, and which skill comes next. The others cover video loops and playlists, destinations and multistream, and building live scenes and changing them on air.
 
 ## Install
 
