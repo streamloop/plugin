@@ -9,7 +9,7 @@ Two APIs on one host, `https://api.streamloop.app`, with the same conventions. E
 - **Scenes** — `/v1/scenes…`: a scene (`scn_…`) and everything in it, read and written by path. Spec: `GET /v1/scenes/openapi.json`.
 
 ## Auth and workspace
-- Your own scripts use an **API key** (`sl_…`, created in the dashboard), sent as `X-API-Key: sl_…`. Keep it server-side, read it from an environment variable, and never write it into code or a browser bundle.
+- Your own scripts use an **API key** (`sl_…`, created in the dashboard), sent as `X-API-Key: sl_…`. Keep it server-side, in the secret store of whatever runs the script, and never commit it or ship it in a browser bundle. Ask the user for it when a script needs one; never look for it on their machine.
 - An API key carries no workspace, so every request names one in `X-Workspace-Id: wksp_…`. The bootstrap needs none: `GET /v1/workspaces` answers a plain array of the key's workspaces (id, name, your role); pick one and send its id from then on (`GET /v1/me`, who the key belongs to, needs none either). Without the header every route that acts in a workspace answers 400 `WORKSPACE_REQUIRED`; the OpenAPI documents and `GET /v1/status` are public and need neither header nor key.
 - Apps acting for other users use OAuth 2.1 with PKCE (`https://auth.streamloop.app`) and send `Authorization: Bearer …`. Ask for the narrowest scopes: `streamloop:read`, `:write`, `:destructive`.
 
@@ -23,7 +23,9 @@ Two APIs on one host, `https://api.streamloop.app`, with the same conventions. E
 
 ## Scenes API in practice
 ```bash
-H=(-H "X-API-Key: $STREAMLOOP_API_KEY" -H "X-Workspace-Id: $WORKSPACE")
+KEY='sl_…'    # the API key the user gave you for this script
+WS='wksp_…'   # from GET /v1/workspaces
+H=(-H "X-API-Key: $KEY" -H "X-Workspace-Id: $WS")
 SCENE=$(curl -s "${H[@]}" -X POST https://api.streamloop.app/v1/scenes -H 'content-type: application/json' -H "Idempotency-Key: $(uuidgen)" -d '{"name":"Matchday"}' | jq -r .id)
 # a frame in it, written as its code (the JSX dialect: GET …/resources/element/* lists the elements)
 curl -s "${H[@]}" -X PUT "https://api.streamloop.app/v1/scenes/$SCENE/resources/frame/main" -H 'content-type: text/jsx' --data-binary @main.jsx
