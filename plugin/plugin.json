@@ -1,13 +1,26 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "streamloop",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "Run 24/7 streams and build live scenes on Streamloop: the Streamloop MCP server and the skills to use it well.",
-  "author": { "name": "Streamloop", "url": "https://streamloop.app" },
+  "author": {
+    "name": "Streamloop",
+    "url": "https://streamloop.app"
+  },
   "homepage": "https://streamloop.app/docs",
-  "repository": "https://github.com/streamloop/skills",
+  "repository": "https://github.com/streamloop/plugin",
   "license": "MIT",
-  "keywords": ["streaming", "live", "youtube", "twitch", "multistream", "broadcast", "graphics", "overlay", "24/7"],
+  "keywords": [
+    "streaming",
+    "live",
+    "youtube",
+    "twitch",
+    "multistream",
+    "broadcast",
+    "graphics",
+    "overlay",
+    "24/7"
+  ],
   "extensions": {
     "com.openai": {
       "onboardingSkill": "./skills/streamloop/SKILL.md",
@@ -17,7 +30,10 @@
         "longDescription": "Streamloop loops video to YouTube, Twitch, Facebook or any RTMP destination around the clock, from the cloud. Create and schedule streams, upload or import media, arrange playlists and playing orders, connect destinations, and build live scenes with overlays, live inputs and live data. Works on your own Streamloop account, signed in with OAuth.",
         "developerName": "Streamloop",
         "category": "Productivity",
-        "capabilities": ["Read", "Write"],
+        "capabilities": [
+          "Read",
+          "Write"
+        ],
         "websiteURL": "https://streamloop.app",
         "supportURL": "https://streamloop.app/contact",
         "privacyPolicyURL": "https://streamloop.app/privacy",
@@ -29,6 +45,59 @@
         ],
         "logo": "./assets/logo.svg",
         "composerIcon": "./assets/logo.svg"
+      },
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "List the workspace's streams with their status.",
+              "prompt": "List all my Streamloop streams and tell me which ones are live.",
+              "tools_triggered": "stream_list",
+              "expected_behavior": "Lists the account's streams by name with each one's state. On the review account this includes \"Test stream\" as a draft, and none is live."
+            },
+            {
+              "description": "Build a live scene that shows data from a public source and link it to two destinations, without going live.",
+              "prompt": "In Streamloop, create a live scene stream called \"City Weather\" that shows the current temperature in London, Tokyo and New York, one city at a time. Use a free public weather source. Send it to both of my destinations, but don't start it. Show me a preview first.",
+              "tools_triggered": "stream_create, scene_get, scene_set, scene_publish, destination_list, stream_add_output",
+              "expected_behavior": "Creates a draft scene stream named \"City Weather\", builds a frame that shows the three cities' temperatures from a public weather API, shows a preview picture, and links both saved destinations. The stream is not started and nothing is broadcast."
+            },
+            {
+              "description": "Import a video from a link and add it to a stream's playlist.",
+              "prompt": "Import this video into Streamloop and add it to the end of my \"Test stream\" playlist: https://download.blender.org/durian/trailer/sintel_trailer-720p.mp4",
+              "tools_triggered": "stream_list, upload_import_from_url, upload_get_import_job_state, playlist_patch",
+              "expected_behavior": "Starts the import, reports when it has finished, and confirms the video is now the last item in the Test stream playlist."
+            },
+            {
+              "description": "Check whether a stream can start and explain what blocks it.",
+              "prompt": "Can my Streamloop \"Test stream\" go live right now? If not, tell me what is missing.",
+              "tools_triggered": "stream_list, stream_preflight_check",
+              "expected_behavior": "Says whether the stream is ready to start. If it is not, lists each blocking issue in plain words with how to fix it, and does not start the stream."
+            },
+            {
+              "description": "Report the account's credit balance.",
+              "prompt": "How many Streamloop credits do I have left, and on which plan am I?",
+              "tools_triggered": "account_get",
+              "expected_behavior": "States the workspace's plan and remaining balance, about $5 on the review account, without changing anything."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Do not trigger for a plain weather question, even though one test case builds a weather scene.",
+              "prompt": "What's the weather going to be in Tokyo tomorrow?"
+            },
+            {
+              "description": "Do not trigger for video editing, which Streamloop does not do.",
+              "prompt": "Trim the first 10 seconds off this video and add English subtitles."
+            },
+            {
+              "description": "Do not trigger for YouTube channel analytics outside a Streamloop stream.",
+              "prompt": "How many subscribers did my YouTube channel gain last month?"
+            }
+          ]
+        }
+      },
+      "publication": {
+        "release_notes": "First public release: the Streamloop MCP server (42 tools for streams, media, playlists, destinations and live scenes) and 12 skills for using it."
       }
     }
   }

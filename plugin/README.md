@@ -9,7 +9,7 @@ Run 24/7 live streams on [Streamloop](https://streamloop.app) from a conversatio
 
 ## Install
 
-In Claude Code: `/plugin marketplace add streamloop/skills`, then `/plugin install streamloop@streamloop`. In Claude and ChatGPT, add it from the directory.
+In Claude Code: `/plugin marketplace add streamloop/plugin`, then `/plugin install streamloop@streamloop`. In Claude and ChatGPT, add it from the directory.
 
 ## Use it
 

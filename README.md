@@ -7,13 +7,13 @@ Skills that teach an AI agent to run [Streamloop](https://streamloop.app): 24/7 
 Any agent that reads skills:
 
 ```bash
-npx skills add streamloop/skills
+npx skills add streamloop/plugin
 ```
 
 Claude Code, which also adds the MCP server:
 
 ```text
-/plugin marketplace add streamloop/skills
+/plugin marketplace add streamloop/plugin
 /plugin install streamloop@streamloop
 ```
 

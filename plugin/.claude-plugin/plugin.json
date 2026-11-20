@@ -1,7 +1,7 @@
 {
   "name": "streamloop",
   "displayName": "Streamloop",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "Run 24/7 streams and build live scenes on Streamloop: the Streamloop MCP server, and the skills its own studio assistant uses — loops, destinations and multistream, layouts, live data, components, scripts and running a scene on air.",
   "author": {
     "name": "Streamloop",
@@ -20,6 +20,6 @@
     "overlay",
     "24/7"
   ],
-  "repository": "https://github.com/streamloop/skills",
+  "repository": "https://github.com/streamloop/plugin",
   "privacyPolicyUrl": "https://streamloop.app/privacy"
 }
